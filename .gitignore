@@ -1,0 +1,21 @@
+# Environment and local runtime data
+.env
+.env.*
+!.env.example
+storage/
+apps/api/*.db
+
+# Node.js
+node_modules/
+.next/
+coverage/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+
+# Tooling
+.DS_Store

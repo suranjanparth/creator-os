@@ -1,0 +1,13 @@
+{
+  "name": "creator-os",
+  "private": true,
+  "workspaces": [
+    "apps/web"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev --workspace @creator-os/web",
+    "build:web": "npm run build --workspace @creator-os/web",
+    "test:web": "npm run test --workspace @creator-os/web",
+    "typecheck:web": "npm run typecheck --workspace @creator-os/web"
+  }
+}
