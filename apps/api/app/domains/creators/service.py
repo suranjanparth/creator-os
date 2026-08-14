@@ -21,6 +21,7 @@ def serialize_creator_profile(record: CreatorProfile) -> CreatorProfileResponse:
         creator_id=record.creator_id,
         name=record.name,
         handle=record.handle,
+        profile_url=record.profile_url,
         niche=record.niche,
         platform=record.platform,
         audience=record.audience,

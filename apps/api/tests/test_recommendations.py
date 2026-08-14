@@ -69,7 +69,7 @@ def test_recommendations_return_insufficient_data_honestly(db_session) -> None:
 def test_recommendations_endpoint_returns_response_contract(client, db_session) -> None:
     seed_development_content(db_session)
 
-    response = client.get("/api/v1/recommendations")
+    response = client.get("/api/v1/recommendations", params={"creator_id": DEVELOPMENT_CREATOR_ID})
 
     assert response.status_code == 200
     payload = response.json()

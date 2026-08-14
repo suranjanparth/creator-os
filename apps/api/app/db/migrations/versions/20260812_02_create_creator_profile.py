@@ -21,6 +21,7 @@ def upgrade() -> None:
         sa.Column("creator_id", sa.String(length=255), nullable=False),
         sa.Column("name", sa.String(length=255), nullable=False),
         sa.Column("handle", sa.String(length=255), nullable=True),
+        sa.Column("profile_url", sa.String(length=500), nullable=True),
         sa.Column("niche", sa.String(length=255), nullable=True),
         sa.Column("platform", sa.String(length=100), nullable=True),
         sa.Column("audience", sa.String(length=255), nullable=True),

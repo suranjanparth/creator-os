@@ -110,7 +110,7 @@ def test_dashboard_endpoint_returns_response_contract(client, db_session) -> Non
     seed_development_creator_profile(db_session)
     seed_development_content(db_session)
 
-    response = client.get("/api/v1/dashboard")
+    response = client.get("/api/v1/dashboard", params={"creator_id": DEVELOPMENT_CREATOR_ID})
 
     assert response.status_code == 200
     payload = response.json()

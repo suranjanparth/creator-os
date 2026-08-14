@@ -42,6 +42,12 @@ export function AppNavigation() {
     let active = true;
     setProfile(null);
     setUnavailable(false);
+    
+    if (!creatorId) {
+      setUnavailable(true);
+      return;
+    }
+
     fetchCreatorProfile(creatorId)
       .then((fetched) => {
         if (active) setProfile(fetched);
@@ -66,11 +72,12 @@ export function AppNavigation() {
         <span className="avatar">{profile ? profileInitials(profile.name) : "C"}</span>
         <span>
           <strong>{profile?.name ?? "Creator"}</strong>
-          <small>{profile?.handle ?? (unavailable ? "Profile unavailable" : "Loading profile…")}</small>
+          <small>{profile?.handle ?? (unavailable ? "No creator selected" : "Loading profile…")}</small>
         </span>
         {profiles.length > 1 ? <label className="creator-switcher">
           <span className="sr-only">Active creator</span>
-          <select aria-label="Active creator" value={creatorId} onChange={(event) => selectCreator(event.target.value)}>
+          <select aria-label="Active creator" value={creatorId || ""} onChange={(event) => selectCreator(event.target.value)}>
+            <option value="">Select a creator</option>
             {profiles.map((creator) => <option key={creator.creator_id} value={creator.creator_id}>{creator.name}</option>)}
           </select>
         </label> : null}

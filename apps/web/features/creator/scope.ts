@@ -2,28 +2,27 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-export const DEVELOPMENT_CREATOR_ID = "maya-chen";
-
 const ACTIVE_CREATOR_STORAGE_KEY = "creator-os.active-creator-id";
 const ACTIVE_CREATOR_CHANGE_EVENT = "creator-os:active-creator-changed";
 
-function normalizeCreatorId(creatorId: string | null | undefined): string {
-  return creatorId?.trim() || DEVELOPMENT_CREATOR_ID;
+function normalizeCreatorId(creatorId: string | null | undefined): string | null {
+  const trimmed = creatorId?.trim();
+  return trimmed || null;
 }
 
-export function getActiveCreatorId(): string {
-  if (typeof window === "undefined") return DEVELOPMENT_CREATOR_ID;
+export function getActiveCreatorId(): string | null {
+  if (typeof window === "undefined") return null;
   return normalizeCreatorId(window.localStorage.getItem(ACTIVE_CREATOR_STORAGE_KEY));
 }
 
 export function saveActiveCreatorId(creatorId: string): void {
   if (typeof window === "undefined") return;
-  window.localStorage.setItem(ACTIVE_CREATOR_STORAGE_KEY, normalizeCreatorId(creatorId));
+  window.localStorage.setItem(ACTIVE_CREATOR_STORAGE_KEY, normalizeCreatorId(creatorId) || "");
   window.dispatchEvent(new Event(ACTIVE_CREATOR_CHANGE_EVENT));
 }
 
 export function useActiveCreatorId() {
-  const [creatorId, setCreatorId] = useState(DEVELOPMENT_CREATOR_ID);
+  const [creatorId, setCreatorId] = useState<string | null>(null);
 
   useEffect(() => {
     const sync = () => setCreatorId(getActiveCreatorId());

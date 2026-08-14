@@ -13,13 +13,13 @@ describe("fetchDashboard", () => {
     vi.unstubAllGlobals();
   });
 
-  it("requests the scoped dashboard endpoint for the development creator", async () => {
+  it("requests the scoped dashboard endpoint for the provided creator", async () => {
     const fetchMock = okResponse({ data_source: "empty" });
     vi.stubGlobal("fetch", fetchMock);
 
-    await fetchDashboard();
+    await fetchDashboard("test-creator");
 
-    expect(fetchMock).toHaveBeenCalledWith(`${apiBaseUrl}/api/v1/dashboard?creator_id=maya-chen`);
+    expect(fetchMock).toHaveBeenCalledWith(`${apiBaseUrl}/api/v1/dashboard?creator_id=test-creator`);
   });
 
   it("encodes a custom creator id in the query string", async () => {
@@ -34,6 +34,6 @@ describe("fetchDashboard", () => {
   it("throws a descriptive error when the backend responds with a failure status", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false, status: 503 }));
 
-    await expect(fetchDashboard()).rejects.toThrow("Dashboard request failed with status 503");
+    await expect(fetchDashboard("test-creator")).rejects.toThrow("Dashboard request failed with status 503");
   });
 });

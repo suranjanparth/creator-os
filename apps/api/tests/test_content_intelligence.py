@@ -67,7 +67,7 @@ def test_content_intelligence_uses_persisted_seeded_data(db_session) -> None:
 def test_content_intelligence_endpoint_returns_persisted_seeded_output(client, db_session) -> None:
     seed_development_content(db_session)
 
-    response = client.get("/api/v1/content-intelligence")
+    response = client.get("/api/v1/content-intelligence", params={"creator_id": DEVELOPMENT_CREATOR_ID})
 
     assert response.status_code == 200
     intelligence = response.json()

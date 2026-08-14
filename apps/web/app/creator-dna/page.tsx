@@ -19,6 +19,10 @@ export default function CreatorDnaPage() {
   useEffect(() => {
     setDna(null);
     setError(false);
+    if (!creatorId) {
+      setError(true);
+      return;
+    }
     void fetchCreatorDna(creatorId).then(setDna).catch(() => setError(true));
   }, [creatorId]);
 
@@ -28,7 +32,7 @@ export default function CreatorDnaPage() {
       <section className="dashboard-message" role="alert">
         <h2>We couldn&apos;t load your creator DNA.</h2>
         <p>Check that the Creator OS API is running, then try again.</p>
-        <button className="button button-primary" onClick={() => { setError(false); void fetchCreatorDna(creatorId).then(setDna).catch(() => setError(true)); }}>Try again</button>
+        <button className="button button-primary" onClick={() => { setError(false); if (creatorId) void fetchCreatorDna(creatorId).then(setDna).catch(() => setError(true)); }}>Try again</button>
       </section>
     </div>;
   }

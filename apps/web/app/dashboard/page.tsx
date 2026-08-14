@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { PageHeader } from "@/components/PageHeader";
@@ -38,17 +39,40 @@ function DashboardLoading() {
 }
 
 export default function DashboardPage() {
+  const router = useRouter();
   const [dashboard, setDashboard] = useState<DashboardData | null>(null);
   const [error, setError] = useState(false);
+  const [noCreator, setNoCreator] = useState(false);
   const { creatorId } = useActiveCreatorId();
 
   useEffect(() => {
+    if (!creatorId) {
+      setNoCreator(true);
+      return;
+    }
+
     setDashboard(null);
     setError(false);
+    setNoCreator(false);
     void fetchDashboard(creatorId).then(setDashboard).catch(() => setError(true));
   }, [creatorId]);
 
-  if (error) return <div className="page dashboard-page"><PageHeader eyebrow="Dashboard" title="Your creator workspace" description="Your dashboard could not be reached." /><section className="dashboard-message" role="alert"><h2>We couldn&apos;t load your dashboard.</h2><p>Check that the Creator OS API is running, then try again.</p><button className="button button-primary" onClick={() => { setError(false); void fetchDashboard(creatorId).then(setDashboard).catch(() => setError(true)); }}>Try again</button></section></div>;
+  if (noCreator) {
+    return (
+      <div className="page dashboard-page">
+        <PageHeader eyebrow="Dashboard" title="Your creator workspace" description="Set up a creator profile to begin." />
+        <section className="dashboard-message" role="alert">
+          <h2>No creator selected</h2>
+          <p>Create or select a creator to view your dashboard.</p>
+          <button className="button button-primary" onClick={() => router.push("/connect")}>
+            Set up creator <span>→</span>
+          </button>
+        </section>
+      </div>
+    );
+  }
+
+  if (error) return <div className="page dashboard-page"><PageHeader eyebrow="Dashboard" title="Your creator workspace" description="Your dashboard could not be reached." /><section className="dashboard-message" role="alert"><h2>We couldn&apos;t load your dashboard.</h2><p>Check that the Creator OS API is running, then try again.</p><button className="button button-primary" onClick={() => { setError(false); if (creatorId) void fetchDashboard(creatorId).then(setDashboard).catch(() => setError(true)); }}>Try again</button></section></div>;
 
   if (!dashboard) return <div className="page dashboard-page"><PageHeader eyebrow="Dashboard" title="Your creator workspace" description="Loading your creator intelligence." /><DashboardLoading /></div>;
 

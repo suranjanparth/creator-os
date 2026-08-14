@@ -43,6 +43,7 @@ const emptyRecommendations: RecommendationsData = {
 describe("RecommendationsPage", () => {
   beforeEach(() => {
     mockedFetchRecommendations.mockReset();
+    window.localStorage.setItem("creator-os.active-creator-id", "maya-chen");
   });
 
   it("renders evidence-backed recommendations from persisted content", async () => {

@@ -32,6 +32,13 @@ export default function ContentPage() {
     setSelectedItemId(null);
     setError(false);
     setLoading(true);
+    
+    if (!creatorId) {
+      setError(true);
+      setLoading(false);
+      return;
+    }
+    
     void fetchContentIntelligence(creatorId)
       .then((intelligence) => {
         setItems(intelligence.items);
@@ -53,6 +60,10 @@ export default function ContentPage() {
     }
     if (!Array.isArray(parsed) || !parsed.length) {
       setIngestStatus("validation");
+      return;
+    }
+    if (!creatorId) {
+      setIngestStatus("error");
       return;
     }
     setIngestStatus("loading");

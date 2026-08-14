@@ -16,6 +16,7 @@ const profile: CreatorProfile = {
   creator_id: "maya-chen",
   name: "Maya Chen",
   handle: "@mayamakes",
+  profile_url: "https://instagram.com/mayamakes",
   niche: "Creative systems & solo business",
   platform: "Instagram",
   audience: "Ambitious creatives, 24-34",
@@ -32,11 +33,13 @@ describe("AppNavigation", () => {
   });
 
   it("renders the persisted creator profile in the nav chip", async () => {
+    window.localStorage.setItem("creator-os.active-creator-id", "maya-chen");
     mockedFetchCreatorProfile.mockResolvedValue(profile);
 
     render(<AppNavigation />);
 
-    await waitFor(() => expect(screen.getByText("Maya Chen")).toBeInTheDocument());
+    await waitFor(() => expect(mockedFetchCreatorProfile).toHaveBeenCalledWith("maya-chen"));
+    expect(screen.getByText("Maya Chen")).toBeInTheDocument();
     expect(screen.getByText("@mayamakes")).toBeInTheDocument();
     expect(screen.getByText("MC")).toBeInTheDocument();
   });
@@ -76,6 +79,7 @@ describe("AppNavigation", () => {
   });
 
   it("shows an honest unavailable fallback when the profile cannot be reached", async () => {
+    window.localStorage.setItem("creator-os.active-creator-id", "maya-chen");
     mockedFetchCreatorProfile.mockRejectedValue(new Error("unavailable"));
 
     render(<AppNavigation />);

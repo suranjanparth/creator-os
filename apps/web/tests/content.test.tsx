@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import ContentPage from "@/app/content/page";
 import { ingestContentBatch } from "@/features/content-ingest/api";
 import { fetchContentIntelligence } from "@/features/content-intelligence/api";
+import * as creatorScope from "@/features/creator/scope";
 
 vi.mock("@/features/content-intelligence/api", () => ({
   fetchContentIntelligence: vi.fn(),
@@ -13,8 +14,13 @@ vi.mock("@/features/content-ingest/api", () => ({
   ingestContentBatch: vi.fn(),
 }));
 
+vi.mock("@/features/creator/scope", () => ({
+  useActiveCreatorId: vi.fn(),
+}));
+
 const mockedFetchContentIntelligence = vi.mocked(fetchContentIntelligence);
 const mockedIngestContentBatch = vi.mocked(ingestContentBatch);
+const mockedUseActiveCreatorId = vi.mocked(creatorScope.useActiveCreatorId);
 
 const item = {
   content: {
@@ -41,6 +47,7 @@ describe("ContentPage", () => {
   beforeEach(() => {
     mockedFetchContentIntelligence.mockReset();
     mockedIngestContentBatch.mockReset();
+    mockedUseActiveCreatorId.mockReturnValue({ creatorId: "maya-chen", selectCreator: vi.fn() });
     mockedFetchContentIntelligence.mockResolvedValue({ data_source: "development", method: "Rule based", summary: null, items: [item] });
   });
 

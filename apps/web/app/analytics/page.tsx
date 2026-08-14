@@ -26,6 +26,7 @@ export default function AnalyticsPage() {
   useEffect(() => {
     setAnalytics(null);
     setError(false);
+    if (!creatorId) return;
     void fetchAnalytics(creatorId).then(setAnalytics).catch(() => setError(true));
   }, [creatorId]);
 
@@ -35,7 +36,7 @@ export default function AnalyticsPage() {
       <section className="dashboard-message" role="alert">
         <h2>We couldn&apos;t load your analytics.</h2>
         <p>Check that the Creator OS API is running, then try again.</p>
-        <button className="button button-primary" onClick={() => { setError(false); void fetchAnalytics(creatorId).then(setAnalytics).catch(() => setError(true)); }}>Try again</button>
+        <button className="button button-primary" onClick={() => { setError(false); if (creatorId) void fetchAnalytics(creatorId).then(setAnalytics).catch(() => setError(true)); }}>Try again</button>
       </section>
     </div>;
   }

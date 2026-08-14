@@ -1,5 +1,4 @@
 import type { DashboardContent } from "@/features/dashboard/api";
-import { DEVELOPMENT_CREATOR_ID } from "@/features/creator/scope";
 
 export type PerformanceTier = "Excellent" | "Strong" | "Average" | "Weak";
 
@@ -26,7 +25,11 @@ export type ContentIntelligenceData = {
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
 
-export async function fetchContentIntelligence(creatorId: string = DEVELOPMENT_CREATOR_ID): Promise<ContentIntelligenceData> {
+export async function fetchContentIntelligence(creatorId: string): Promise<ContentIntelligenceData> {
+  if (!creatorId) {
+    throw new Error("No creator selected");
+  }
+
   const response = await fetch(`${apiBaseUrl}/api/v1/content-intelligence?creator_id=${encodeURIComponent(creatorId)}`);
 
   if (!response.ok) {

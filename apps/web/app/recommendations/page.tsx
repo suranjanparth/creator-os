@@ -14,6 +14,10 @@ export default function RecommendationsPage() {
   useEffect(() => {
     setData(null);
     setError(false);
+    if (!creatorId) {
+      setError(true);
+      return;
+    }
     void fetchRecommendations(creatorId).then(setData).catch(() => setError(true));
   }, [creatorId]);
 
@@ -23,7 +27,7 @@ export default function RecommendationsPage() {
       <section className="dashboard-message" role="alert">
         <h2>We couldn&apos;t load your recommendations.</h2>
         <p>Check that the Creator OS API is running, then try again.</p>
-        <button className="button button-primary" onClick={() => { setError(false); void fetchRecommendations(creatorId).then(setData).catch(() => setError(true)); }}>Try again</button>
+        <button className="button button-primary" onClick={() => { setError(false); if (creatorId) void fetchRecommendations(creatorId).then(setData).catch(() => setError(true)); }}>Try again</button>
       </section>
     </div>;
   }

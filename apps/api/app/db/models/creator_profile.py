@@ -14,6 +14,7 @@ class CreatorProfile(Base):
     creator_id: Mapped[str] = mapped_column(String(255), primary_key=True)
     name: Mapped[str] = mapped_column(String(255))
     handle: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    profile_url: Mapped[str | None] = mapped_column(String(500), nullable=True)
     niche: Mapped[str | None] = mapped_column(String(255), nullable=True)
     platform: Mapped[str | None] = mapped_column(String(100), nullable=True)
     audience: Mapped[str | None] = mapped_column(String(255), nullable=True)

@@ -58,7 +58,7 @@ def test_analytics_is_scoped_to_the_creator(db_session) -> None:
 def test_analytics_endpoint_returns_response_contract(client, db_session) -> None:
     seed_development_content(db_session)
 
-    response = client.get("/api/v1/analytics")
+    response = client.get("/api/v1/analytics", params={"creator_id": DEVELOPMENT_CREATOR_ID})
 
     assert response.status_code == 200
     payload = response.json()

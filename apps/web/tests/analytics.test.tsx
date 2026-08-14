@@ -56,6 +56,7 @@ const emptyAnalytics: AnalyticsData = {
 describe("AnalyticsPage", () => {
   beforeEach(() => {
     mockedFetchAnalytics.mockReset();
+    window.localStorage.setItem("creator-os.active-creator-id", "maya-chen");
   });
 
   it("renders analytics derived from persisted content", async () => {

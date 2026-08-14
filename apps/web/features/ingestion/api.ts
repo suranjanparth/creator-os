@@ -1,6 +1,7 @@
 export type ImportedContentItemInput = {
   id: string;
   platform: string;
+  url?: string | null;
   content_type: string;
   category: string;
   title: string;
@@ -8,6 +9,9 @@ export type ImportedContentItemInput = {
   likes?: number | null;
   comments?: number | null;
   shares?: number | null;
+  saves?: number | null;
+  reach?: number | null;
+  impressions?: number | null;
   engagement_rate?: number | null;
   published_at?: string | null;
 };
@@ -15,6 +19,7 @@ export type ImportedContentItemInput = {
 export type ImportedProfileInput = {
   name: string;
   handle?: string | null;
+  profile_url?: string | null;
   niche?: string | null;
   platform?: string | null;
   audience?: string | null;

@@ -35,10 +35,14 @@ export default function ContentIntelligencePage() {
   useEffect(() => {
     setIntelligence(null);
     setError(false);
+    if (!creatorId) {
+      setError(true);
+      return;
+    }
     void fetchContentIntelligence(creatorId).then(setIntelligence).catch(() => setError(true));
   }, [creatorId]);
 
-  if (error) return <div className="page intelligence-page"><PageHeader eyebrow="Content intelligence" title="Explain every post." description="The initial intelligence layer could not be reached." /><section className="dashboard-message" role="alert"><h2>We couldn&apos;t load content intelligence.</h2><p>Check that the Creator OS API is running, then try again.</p><button className="button button-primary" onClick={() => { setError(false); void fetchContentIntelligence(creatorId).then(setIntelligence).catch(() => setError(true)); }}>Try again</button></section></div>;
+  if (error) return <div className="page intelligence-page"><PageHeader eyebrow="Content intelligence" title="Explain every post." description="The initial intelligence layer could not be reached." /><section className="dashboard-message" role="alert"><h2>We couldn&apos;t load content intelligence.</h2><p>Check that the Creator OS API is running, then try again.</p><button className="button button-primary" onClick={() => { setError(false); if (creatorId) void fetchContentIntelligence(creatorId).then(setIntelligence).catch(() => setError(true)); }}>Try again</button></section></div>;
   if (!intelligence) return <div className="page intelligence-page"><PageHeader eyebrow="Content intelligence" title="Explain every post." description="Loading rule-based performance analysis." /><div className="dashboard-loading" aria-live="polite"><span /><span /><span /></div></div>;
   if (!intelligence.items.length) return <div className="page intelligence-page"><PageHeader eyebrow="Content intelligence" title="Explain every post." description="A clear, rule-based read on what each post earned and what to build next." /><section className="dashboard-message"><h2>No analyzed posts yet.</h2><p>Connect published content with views and engagement data to generate Content Intelligence.</p></section></div>;
 

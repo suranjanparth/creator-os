@@ -13,6 +13,7 @@ const mockedFetchContentIntelligence = vi.mocked(fetchContentIntelligence);
 describe("ContentIntelligencePage", () => {
   beforeEach(() => {
     mockedFetchContentIntelligence.mockReset();
+    window.localStorage.setItem("creator-os.active-creator-id", "maya-chen");
   });
 
   it("shows an explicit empty state when the API has no analyzed posts", async () => {

@@ -1,5 +1,3 @@
-import { DEVELOPMENT_CREATOR_ID } from "@/features/creator/scope";
-
 export type AnalyticsTotals = {
   views: number;
   likes: number;
@@ -50,7 +48,11 @@ export type AnalyticsData = {
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
 
-export async function fetchAnalytics(creatorId: string = DEVELOPMENT_CREATOR_ID): Promise<AnalyticsData> {
+export async function fetchAnalytics(creatorId: string): Promise<AnalyticsData> {
+  if (!creatorId) {
+    throw new Error("No creator selected");
+  }
+
   const response = await fetch(`${apiBaseUrl}/api/v1/analytics?creator_id=${encodeURIComponent(creatorId)}`);
 
   if (!response.ok) {

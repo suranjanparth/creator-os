@@ -54,6 +54,7 @@ const emptyDna: DnaData = {
 describe("CreatorDnaPage", () => {
   beforeEach(() => {
     mockedFetchCreatorDna.mockReset();
+    window.localStorage.setItem("creator-os.active-creator-id", "maya-chen");
   });
 
   it("renders the persisted creator identity and real content signals", async () => {

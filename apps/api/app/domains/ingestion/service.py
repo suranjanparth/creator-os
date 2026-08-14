@@ -12,10 +12,11 @@ from app.schemas.ingestion import (
     ImportedCreatorProfile,
 )
 
-_PROFILE_FIELDS = ("name", "handle", "niche", "platform", "audience", "follower_count")
+_PROFILE_FIELDS = ("name", "handle", "profile_url", "niche", "platform", "audience", "follower_count")
 _CONTENT_FIELDS = (
     "id",
     "platform",
+    "url",
     "content_type",
     "category",
     "title",
@@ -23,6 +24,9 @@ _CONTENT_FIELDS = (
     "likes",
     "comments",
     "shares",
+    "saves",
+    "reach",
+    "impressions",
     "engagement_rate",
     "published_at",
 )

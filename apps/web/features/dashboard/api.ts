@@ -1,4 +1,4 @@
-import { DEVELOPMENT_CREATOR_ID } from "@/features/creator/scope";
+import { type CreatorProfile } from "@/features/creator/api";
 
 export type DashboardCreator = {
   name: string;
@@ -52,7 +52,11 @@ export type DashboardData = {
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
 
-export async function fetchDashboard(creatorId: string = DEVELOPMENT_CREATOR_ID): Promise<DashboardData> {
+export async function fetchDashboard(creatorId: string | null): Promise<DashboardData> {
+  if (!creatorId) {
+    throw new Error("No creator selected");
+  }
+
   const response = await fetch(`${apiBaseUrl}/api/v1/dashboard?creator_id=${encodeURIComponent(creatorId)}`);
 
   if (!response.ok) {

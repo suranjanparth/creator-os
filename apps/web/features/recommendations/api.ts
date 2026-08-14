@@ -1,5 +1,3 @@
-import { DEVELOPMENT_CREATOR_ID } from "@/features/creator/scope";
-
 export type Recommendation = {
   tag: string;
   title: string;
@@ -27,7 +25,11 @@ export type RecommendationsData = {
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
 
-export async function fetchRecommendations(creatorId: string = DEVELOPMENT_CREATOR_ID): Promise<RecommendationsData> {
+export async function fetchRecommendations(creatorId: string): Promise<RecommendationsData> {
+  if (!creatorId) {
+    throw new Error("No creator selected");
+  }
+
   const response = await fetch(`${apiBaseUrl}/api/v1/recommendations?creator_id=${encodeURIComponent(creatorId)}`);
 
   if (!response.ok) {

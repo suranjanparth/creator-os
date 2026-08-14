@@ -8,6 +8,7 @@ class CreatorContentCreate(BaseModel):
     id: str = Field(min_length=1, max_length=255)
     creator_id: str = Field(min_length=1, max_length=255)
     platform: str = Field(min_length=1, max_length=100)
+    url: str | None = Field(default=None, max_length=500)
     content_type: str = Field(min_length=1, max_length=100)
     category: str = Field(min_length=1, max_length=255)
     title: str = Field(min_length=1, max_length=500)
@@ -15,6 +16,9 @@ class CreatorContentCreate(BaseModel):
     likes: int | None = Field(default=None, ge=0)
     comments: int | None = Field(default=None, ge=0)
     shares: int | None = Field(default=None, ge=0)
+    saves: int | None = Field(default=None, ge=0)
+    reach: int | None = Field(default=None, ge=0)
+    impressions: int | None = Field(default=None, ge=0)
     engagement_rate: float | None = Field(default=None, ge=0)
     published_at: date | None = None
 
@@ -28,6 +32,7 @@ class ContentIngestItem(BaseModel):
 
     id: str = Field(min_length=1, max_length=255)
     platform: str = Field(min_length=1, max_length=100)
+    url: str | None = Field(default=None, max_length=500)
     content_type: str = Field(min_length=1, max_length=100)
     category: str = Field(min_length=1, max_length=255)
     title: str = Field(min_length=1, max_length=500)
@@ -35,6 +40,9 @@ class ContentIngestItem(BaseModel):
     likes: int | None = Field(default=None, ge=0)
     comments: int | None = Field(default=None, ge=0)
     shares: int | None = Field(default=None, ge=0)
+    saves: int | None = Field(default=None, ge=0)
+    reach: int | None = Field(default=None, ge=0)
+    impressions: int | None = Field(default=None, ge=0)
     engagement_rate: float | None = Field(default=None, ge=0)
     published_at: date | None = None
 
